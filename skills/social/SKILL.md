@@ -30,6 +30,7 @@ Rules for both platforms:
 - **Not salesy.** No urgency, discounts, "link in bio", or hype words. Product mentions go in the first reply, only when relevant.
 - **Facts from sources.** Every number and name comes from a source you read. Never invent a first-person story.
 - **End on a takeaway or a real question.** Not "thoughts?" or "agree?".
+- **No slop.** Run the slop check from `ste100` (stock AI words, hype, "not X but Y" frames, em dash chains). Keep the user's voice; the STE sentence rules do not apply here.
 
 **X single post:** up to 280 characters, 2 to 4 short blocks, no hashtags (one at most).
 **X thread:** only when the story needs 3 to 7 beats. Each post stands alone and adds one thing. The last post is the takeaway.

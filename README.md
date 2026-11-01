@@ -44,7 +44,7 @@ Start with `/estack`. It reads your task and picks the right skill.
 
 | Skill | What it does |
 |---|---|
-| `plain` | Plain, short English based on ASD-STE100, for docs, UI copy, prompts, and reports |
+| `ste100` | Non-slop writing: ASD-STE100 Simplified Technical English plus a check that removes stock AI phrasing, hype, and filler |
 
 Skills call each other where it helps: `premortem` then `ship`, `blog` then `social` then `short`, `explain` then `quiz-me`.
 

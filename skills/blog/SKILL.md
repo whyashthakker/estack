@@ -29,6 +29,7 @@ Goal: the best page on the internet for one question, written in the site's own 
 - **"What people are saying"** section when there is real discussion.
 - **FAQ:** 4 to 6 real questions with short, direct answers. Add `FAQPage` schema if the site supports it.
 - **Voice:** match the site. Plain words, short sentences. No hype words ("revolutionary", "game-changer"). No invented first-person stories.
+- **Slop check:** before you finish, run the slop check from `ste100` on the whole draft.
 
 ## 4. Media
 

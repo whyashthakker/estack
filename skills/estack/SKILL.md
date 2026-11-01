@@ -1,6 +1,6 @@
 ---
 name: estack
-description: Entry point for eStack, the AI operator stack from explainx.ai. Reads the task and routes it to the right eStack skill (explain, quiz-me, catch-up, pick-model, premortem, ship, verify-ui, ux-review, seo-geo, blog, social, short, plain). Use when the user types "/estack", says "estack", asks "which skill should I use", or starts a task that spans learning, building, and growing a product with AI agents.
+description: Entry point for eStack, the AI operator stack from explainx.ai. Reads the task and routes it to the right eStack skill (explain, quiz-me, catch-up, pick-model, premortem, ship, verify-ui, ux-review, seo-geo, blog, social, short, ste100). Use when the user types "/estack", says "estack", asks "which skill should I use", or starts a task that spans learning, building, and growing a product with AI agents.
 ---
 
 # eStack
@@ -23,7 +23,7 @@ eStack is a small set of skills for people who build and grow a business with AI
 | Grow | `blog` | You need a researched post that people and AI engines trust |
 | Grow | `social` | You need X or LinkedIn posts with a clear point of view |
 | Grow | `short` | You need a script for a YouTube Short, Reel, or TikTok |
-| Any | `plain` | Text must be plain, short, and easy to translate |
+| Any | `ste100` | Text must be plain, short, easy to translate, and free of AI slop |
 
 ## How to route
 
