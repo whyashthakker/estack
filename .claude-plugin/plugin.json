@@ -1,0 +1,10 @@
+{
+  "name": "estack",
+  "version": "0.1.0",
+  "description": "The AI operator stack from explainx.ai: skills to learn, build, and grow with AI agents.",
+  "author": { "name": "explainx.ai", "url": "https://explainx.ai" },
+  "homepage": "https://github.com/whyashthakker/estack",
+  "repository": "https://github.com/whyashthakker/estack",
+  "license": "MIT",
+  "keywords": ["skills", "learning", "seo", "content", "shipping"]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "estack",
+  "owner": { "name": "explainx.ai", "url": "https://explainx.ai" },
+  "plugins": [
+    {
+      "name": "estack",
+      "source": "./",
+      "description": "The AI operator stack from explainx.ai: skills to learn, build, and grow with AI agents."
+    }
+  ]
+}
