@@ -1,80 +1,140 @@
 ---
 name: ste100
-description: Write or rewrite prose in ASD-STE100 Simplified Technical English and remove AI slop. Short sentences, active voice, one idea per sentence, one word for one meaning, no filler, no hype, no stock AI phrasing, and no loss of facts. Use for docs, instructions, READMEs, reports, emails, UI copy, agent prompts, skill files, and answers, or when the user says "STE", "STE100", "plain English", "simplify", "too wordy", "cut the fluff", "de-slop", "sounds like AI", or "make it human". Not for code, quotes, marketing copy, or text in a named personal voice.
+description: Write or rewrite prose in ASD-STE100 Simplified Technical English (Issue 9) and remove AI slop. Applies the countable STE rules (20-word procedure sentences, 25-word descriptive sentences, 6-sentence paragraphs, active voice, allowed verb forms, 3-word noun clusters, one instruction per sentence, condition before command), then a slop check built from Wikipedia's "Signs of AI writing" list, then an optional linter. Use for docs, READMEs, runbooks, instructions, error messages, UI copy, incident reports, release notes, agent prompts and skill files, or when the user says "STE", "STE100", "ASD-STE100", "plain English", "simplify", "too wordy", "cut the fluff", "de-slop", "sounds like AI", or "make it human". Do not use for code, quotes, marketing copy, or text in a named personal voice (LinkedIn, X, Reddit, video scripts) except for the slop check.
 ---
 
-# STE100 (non-slop writing)
+# ASD-STE100 (non-slop writing)
 
-ASD-STE100 Simplified Technical English is a writing standard from the aerospace industry. It was made so that any reader, in any level of English, gets one meaning from each sentence. This skill uses its main rules, and adds a check for the patterns that make text read as machine-written.
+## What the standard is
+
+ASD-STE100 Simplified Technical English (STE) is a controlled form of English. The European aerospace industry (AECMA, now ASD) started it in 1983 for aircraft maintenance manuals, and the first guide came out in the mid-1980s. The current version is **Issue 9, released January 2025**. It is the first issue published as an international standard. The ASD Simplified Technical English Maintenance Group (STEMG) maintains it, and ASD gives it out free of charge on request through asd-ste100.org (free since Issue 6, 2013).
+
+The standard has two parts:
+1. **Writing rules** (53 in recent issues) in nine sections: words, noun clusters, verbs, sentences, procedures, descriptive writing, safety instructions, punctuation and word counts, and writing practices.
+2. **A dictionary** of about 900 approved words. Each approved word has **one meaning and one part of speech**. The dictionary also lists common unapproved words with approved alternatives. Technical names and technical verbs for your field (for example "API", "commit", "deploy") are allowed by the writing rules even though they are not in the dictionary.
+
+**Be honest about compliance.** You do not have the official dictionary. This skill gives text that follows the countable rules. It does **not** make text "STE compliant". Never claim compliance. For regulated documents (aviation, defense, medical devices), tell the user to check the output against the official standard with a trained STE writer.
 
 ## The core rule: change the words, never the substance
 
-Simplify how you say it. Do not drop facts, numbers, caveats, reasons, or recommendations to make text shorter. If a point needs 6 short sentences, write 6. A correct, complete answer comes first. If a rule below makes the text wrong or vague, break the rule.
+Simplify how the text says something. Do not drop facts, numbers, identifiers, commands, caveats, reasons, or recommendations. Keep the original strength of every claim: "usually" stays "usually", "must" stays "must". If a point needs 6 short sentences, write 6. Add nothing that is not in the source. If a rule makes the text wrong or vague, break the rule.
 
-## STE rules
+## Two modes
 
-**Sentences**
-- Instructions: 20 words or fewer. Descriptions: 25 words or fewer. Split long sentences; do not cut content.
-- One idea per sentence. One instruction per sentence.
-- Active voice: "The script reads the file", not "The file is read". Use passive only when the actor is unknown or does not matter.
-- Commands for instructions: "Open the file", not "You may want to open the file".
-- Condition before action: "If the test fails, read the log."
-- Simple present for facts. "Will" only for real future actions.
+| Mode | Use for | What changes |
+|---|---|---|
+| **Practical (default)** | Docs, READMEs, answers, reports, prompts, UI copy | All countable rules below. Vocabulary is looser: use common words, one word per meaning, but technical and common words outside the STE dictionary are fine. Andrej Karpathy calls this asking for text "80% of the way" to STE. |
+| **Strict** | Procedures, safety warnings, regulated manuals, when the user asks for strict STE | Countable rules plus dictionary discipline: use each word in one meaning and one part of speech only, prefer the most basic word, and **flag every word you are not sure is approved** so a person can check it in the dictionary. |
+
+## The rules (practical summary)
+
+Full rule notes, with examples and the common cheat-sheet errors, are in `references/rules.md`. Read it for strict mode or when unsure.
 
 **Words**
-- Common words: "use" not "utilize", "start" not "commence", "show" not "demonstrate", "help" not "facilitate", "about" not "approximately".
-- One word, one meaning. Use the same word for the same thing every time. Do not change words for variety.
-- No idioms, metaphors, or vague phrasal verbs. "Install" not "set up" when you mean install. "Do" not "carry out".
-- Do not stack more than 3 nouns. "The handler for password reset requests", not "user account password reset request handler".
-- Keep articles ("the", "a"). Repeat the noun when "it" or "this" could be unclear.
-- Keep technical names (product names, API names, acronyms). Define a term on first use if the reader may not know it.
+- One word, one meaning. Use the same word for the same thing every time. Never change words for variety.
+- Use the simplest common word: "use" not "utilize", "start" not "commence", "show" not "demonstrate", "help" not "facilitate", "end" not "terminate".
+- Use a word only in its usual part of speech. Do not turn nouns into verbs ("action the ticket", "impact the build").
+- No idioms, no figures of speech, no vague phrasal verbs ("set up" for install, "carry out" for do, "look into" for examine).
+- Technical names and verbs of the field are allowed. Define a term the first time if the reader may not know it.
 
-**Structure**
-- Most important information first.
-- Steps as a numbered list, one action per step.
-- Warnings and cautions before the step they apply to, as short commands.
-- One topic per paragraph, 3 to 4 sentences at most.
-- Numbers as digits with units: "3 files", "5 min", "$29".
+**Noun clusters**
+- No more than 3 nouns in a row. "the handler for password reset requests", not "user password reset request handler". Use prepositions or a short explanation to break long clusters.
+
+**Verbs**
+- Allowed forms: infinitive, imperative, simple present, simple past, simple future ("will"), and the past participle used as an adjective ("the installed package").
+- No perfect or continuous forms when a simple form works: "The build fails", not "The build has been failing".
+- No "-ing" forms, except as part of a technical name ("logging level", "string").
+- Active voice. In descriptive text, use the passive only when you do not know who or what does the action.
+- Use an action verb, not a noun made from a verb: "Install the package", not "Perform the installation of the package".
+
+**Sentences**
+- One topic per sentence.
+- Do not leave out words to make text shorter. Keep "the", "a", "an", "that", verbs and subjects. STE is not telegraph style.
+- Use vertical lists for complex text and for items in a series.
+- Use connecting words ("then", "but", "because", "if") to join thoughts in descriptive text.
+
+**Procedures**
+- Sentences of **20 words or fewer**.
+- Imperative (command) form: "Open the file." Not "You should open the file" or "The file can be opened".
+- One instruction per sentence. Two actions can share a sentence only if they occur at the same time.
+- Put a condition before the command: "If the test fails, read the log."
+- Numbered steps, in the order the reader does them.
+- Put descriptive information in a separate note, not inside the step.
+
+**Descriptive writing**
+- Sentences of **25 words or fewer**.
+- **6 sentences or fewer** per paragraph, one topic per paragraph.
+- Start with the most important information: the topic sentence comes first.
+- Give only the information the reader needs.
+
+**Safety instructions (warnings and cautions)**
+- Start with a simple, clear command or condition: "Do not delete the main branch." "Stop the service before you edit the config."
+- Give the risk in a short explanation after the command: what can happen.
+- Put the warning **before** the step it applies to, not after.
+
+**Punctuation and word counts**
+- No semicolons. Use two sentences.
+- No contractions in strict mode ("do not", not "don't"). Practical mode may keep them if the user's style uses them.
+- Use parentheses only for references, labels and short clarifications. Do not hide instructions in them.
+- A hyphenated word, a number with its unit, and a code identifier each count as one word.
+
+**Writing practices**
+- Say exactly what you mean. Use numbers and units: "3 files", "5 min", "$29", not "a few" or "quickly".
+- Keep the same structure for the same type of information (every error message: what happened, then what to do).
 
 ## Slop check
 
-Remove these patterns. They add words and no information, and they tell the reader a machine wrote the text.
+STE fixes sentence shape. It does not catch every pattern that makes text read as machine-written. After the rewrite, remove the patterns in `references/slop-patterns.md`. The short list:
 
-| Pattern | Examples | Fix |
-|---|---|---|
-| Empty openers and closers | "Great question!", "Certainly!", "I hope this helps", "Let me know if you have any other questions" | Delete. Start with the answer. |
-| Throat-clearing | "It's important to note that", "It's worth mentioning", "In today's fast-paced world", "When it comes to" | Delete. State the fact. |
-| Hype words | "revolutionary", "game-changer", "cutting-edge", "seamless", "robust", "powerful", "unlock", "supercharge", "elevate" | Say what it does, with a number if you have one. |
-| Stock AI vocabulary | "delve", "tapestry", "landscape", "realm", "navigate the complexities", "testament to", "underscore", "pivotal", "multifaceted", "embark" | Use the plain word or delete. |
-| "Not X, but Y" frames | "It's not just a tool, it's a movement" | State Y directly. |
-| Rule of three by habit | "fast, reliable, and scalable" when only one is shown | Keep only what is true and proven. |
-| Hedge stacks | "may potentially help to somewhat reduce" | Say how sure you are once, in plain words: "This reduces X in most cases." |
-| Restating the question | "You asked about X. X is..." | Answer. |
-| Summary of the summary | "In conclusion", "Overall", "To sum up" after a short text | Delete, or end on the one action that matters. |
-| Fake enthusiasm and flattery | "What a great idea!", "You're absolutely right!" | Delete. Agree or disagree with a reason. |
-| Bold and emoji everywhere | Bold on every other phrase, emoji bullets | Bold only the one thing a skimmer must see. |
-| Em dash chains | "The tool — which is new — works — mostly" | Use periods and commas. Split the sentence. |
-| Vague claims | "many experts say", "studies show", "significantly faster" | Name the source and the number, or remove the claim. |
+1. **Empty openers and closers:** "Great question!", "Certainly!", "I hope this helps", "Let me know if...". Start with the answer.
+2. **Inflated significance:** "stands as a testament", "pivotal", "underscores its importance", "evolving landscape", "indelible mark", "setting the stage for".
+3. **AI vocabulary clusters:** "delve", "tapestry", "intricate", "meticulous", "crucial", "vibrant", "showcase", "realm", "navigate", "foster", "Additionally" at the start of every paragraph.
+4. **Copula avoidance:** "serves as", "stands as", "functions as", "boasts", "features" where "is" or "has" works.
+5. **Negative parallelisms:** "It's not just X, it's Y", "not X, but Y", "no X, no Y, just Z". State Y.
+6. **Trailing "-ing" analysis clauses:** "..., highlighting the need for...", "..., ensuring that...". These also break the STE "-ing" rule. Write a second sentence or delete.
+7. **Promotional tone:** "groundbreaking", "seamless", "robust", "powerful", "game-changer", "unlock", "supercharge", "renowned", "nestled in the heart of".
+8. **Vague attribution:** "experts say", "industry reports", "studies show", "observers note". Name the source or remove the claim.
+9. **Rule of three by habit:** "fast, reliable, and scalable" when only one is shown.
+10. **Formulaic sections:** "Challenges and Future Outlook", "Despite these challenges...", a conclusion that repeats the summary.
+11. **Hedge stacks:** "may potentially help to somewhat reduce". Say how sure you are once.
+12. **Formatting slop:** bold on every phrase, emoji bullets, headings over two-line sections, em dash chains.
+13. **Chatbot artifacts:** "As an AI...", "Here is a revised version:", placeholder text, "as of my last update".
+
+Wikipedia's editors warn that no single pattern proves text is AI-written, and that accuracy and sourcing matter more than surface patterns. Fix the pattern because it wastes the reader's time, not to hide anything.
 
 ## Do not apply to
 
-- Code, commands, config, logs, and quoted or pasted text. Keep them exact. Code comments may follow STE.
-- Creative writing, marketing and persuasive copy, and text in a named voice (a personal LinkedIn or X voice, a video script). The slop check still helps there, but the STE sentence rules do not.
+- Code, commands, config, logs, file paths, and quoted or pasted text. Keep them exact. Code comments may follow STE.
+- Persuasive and marketing copy, stories, and text in a named voice (a personal LinkedIn or X voice, video scripts). Run only the slop check there; the STE sentence rules do not apply.
 - Text in other languages. STE is an English standard.
 - Any text where the user asks for a different style. The user wins.
 
-## How to apply
+## Workflow
 
-1. Find the one purpose of the text and who reads it.
-2. Rewrite with the STE rules. Keep every fact.
-3. Run the slop check on the result.
-4. Final read: Is any sentence too long? Is any passive voice without a reason? Does one thing have two names? Is any fact missing? Fix, then deliver.
-5. Show the new text. List the main changes in 3 bullets only if the user asks.
+1. Find the text type: **procedure** (steps), **description** (explanation), or **safety instruction**. Many documents mix them. Use the rule set for each part.
+2. Choose the mode: practical unless the user asks for strict or the text is a procedure or warning in a regulated field.
+3. Rewrite with the rules. Keep every fact, number, identifier and hedge strength.
+4. Run the slop check.
+5. Optional: run the linter on the result and fix real hits. It gives false positives (for example "string" ends in "-ing"):
+   ```bash
+   python3 ~/.claude/skills/ste100/scripts/ste_check.py FILE.md
+   python3 ~/.claude/skills/ste100/scripts/ste_check.py --procedure FILE.md   # 20-word limit for all sentences
+   ```
+6. Final read: Is any sentence too long? Is there a passive with a known actor? Does one thing have two names? Is any fact missing? Is any hedge stronger or weaker than the source?
+7. Deliver the text. In strict mode, list the words to check in the dictionary. Do not mention STE unless the user asked for it.
 
 ## Example
 
-Before: "It's worth noting that you'll probably want to leverage a robust caching layer in order to seamlessly mitigate the latency that might be experienced when the database is being queried repeatedly."
+Before (descriptive, 33 words, passive, hedges, slop):
+"It's worth noting that a robust caching layer should be leveraged in order to seamlessly mitigate the latency that might potentially be experienced when the database is being queried repeatedly by the application."
 
-After: "Add a cache. The cache stores the results of repeated queries. This reduces the wait time for each request."
+After (3 sentences, 8 to 10 words each):
+"Add a cache between the application and the database. The cache keeps the results of repeated queries. This decreases the wait time for each request."
 
-The cause (repeated queries), the fix (a cache), and the benefit (less wait time) are all still there. The slop is gone.
+Before (procedure, two instructions, condition last, no warning):
+"Run the migration and then restart the server, but make sure you've taken a backup first if you're on production."
+
+After:
+"**Caution:** On production, make a backup before you continue. A failed migration can delete data.
+1. Run the migration.
+2. Restart the server."
